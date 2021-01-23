@@ -1,13 +1,13 @@
 image:
   repository: "michalpadula/travel-share"
   pullPolicy: IfNotPresent
-  tag: "2"
+  tag: "3"
 
 django:
-  debug: "True"
+  debug: "False"
 
 sql:
   engine: django.db.backends.postgresql
-  host: hattie.db.elephantsql.com
+  host: 35.224.112.221
   port: 5432
-  database: vhpdjaqe
+  database: travel-share

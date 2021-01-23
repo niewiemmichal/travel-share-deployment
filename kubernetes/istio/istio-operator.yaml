@@ -4,6 +4,8 @@ metadata:
   name: istio
 spec:
   profile: minimal
+  meshConfig:
+    accessLogFile: /dev/stdout
   components:
     ingressGateways:
       - name: istio-ingressgateway
