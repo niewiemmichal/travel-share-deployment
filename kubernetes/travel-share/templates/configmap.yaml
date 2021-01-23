@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "travel-share.fullname" . }}
+  labels:
+    {{- include "travel-share.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+data:
+    django-debug: {{ .Values.django.debug | quote }}
+    sql-engine: {{ .Values.sql.engine | quote }}
+    sql-host: {{ .Values.sql.host | quote }}
+    sql-port: {{ .Values.sql.port | quote }}
+    sql-database: {{ .Values.sql.database | quote }}

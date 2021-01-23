@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "travel-share.fullname" . }}
+  labels:
+    {{- include "travel-share.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "travel-share.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "travel-share.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: "DJANGO_DEBUG"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "travel-share.fullname" . }}
+                  key: django-debug
+            - name: "SQL_ENGINE"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "travel-share.fullname" . }}
+                  key: sql-engine
+            - name: "SQL_DATABASE"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "travel-share.fullname" . }}
+                  key: sql-database
+            - name: "SQL_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "travel-share.fullname" . }}
+                  key: sql-username
+            - name: "SQL_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "travel-share.fullname" . }}
+                  key: sql-password
+            - name: "SQL_HOST"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "travel-share.fullname" . }}
+                  key: sql-host
+            - name: "SQL_PORT"
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "travel-share.fullname" . }}
+                  key: sql-port

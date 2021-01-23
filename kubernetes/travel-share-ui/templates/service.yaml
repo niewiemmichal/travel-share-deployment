@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "travel-share-ui.fullname" . }}
+  labels:
+    {{- include "travel-share-ui.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "travel-share-ui.selectorLabels" . | nindent 4 }}

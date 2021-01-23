@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: travel-share
+  namespace: travel-share
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - travel-share
+  http:
+  - match:
+    - uri:
+        prefix: /admin
+    - uri:
+        prefix: /rest-auth
+    - uri:
+        prefix: /api
+    - uri:
+        prefix: /static
+    route:
+    - destination:
+        port:
+          number: 8000
+        host: travel-share
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 8000
+        host: travel-share-ui

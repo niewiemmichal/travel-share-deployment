@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: ""
+  pullPolicy: IfNotPresent
+  tag: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+sql:
+  engine:
+  database:
+  host:
+  port:
+  username:
+  password:
+
+django:
+  debug:
+  secretKey:
