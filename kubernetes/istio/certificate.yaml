@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: gateway
+  namespace: istio-system
+spec:
+  secretName: gateway-certificate
+  issuerRef:
+    name: clouddns
+    kind: ClusterIssuer
+  dnsNames:
+  - travelshare.cvapr.xyz
+  - www.travelshare.cvapr.xyz
