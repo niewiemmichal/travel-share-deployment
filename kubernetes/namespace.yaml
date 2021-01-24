@@ -4,3 +4,8 @@ metadata:
   name: travel-share
   labels:
     istio.io/rev: 1-8
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager

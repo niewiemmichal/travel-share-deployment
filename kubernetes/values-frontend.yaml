@@ -1,4 +1,4 @@
 image:
   repository: "michalpadula/travel-share-ui"
   pullPolicy: IfNotPresent
-  tag: "4"
+  tag: "6"

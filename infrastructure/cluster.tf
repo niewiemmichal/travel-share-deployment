@@ -40,6 +40,10 @@ resource "google_container_cluster" "primary" {
       issue_client_certificate = false
     }
   }
+
+  workload_identity_config {
+    identity_namespace = "${var.project_id}.svc.id.goog"
+  }
 }
 
 resource "google_container_node_pool" "primary_nodes" {
@@ -63,5 +67,31 @@ resource "google_container_node_pool" "primary_nodes" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
+    workload_metadata_config {
+      node_metadata = "GKE_METADATA_SERVER"
+    }
   }
+}
+
+resource "google_service_account" "this" {
+  account_id   = "dns01-solver"
+  display_name = "A service account for cert-manager"
+}
+
+resource "google_service_account_iam_binding" "this" {
+  service_account_id = google_service_account.this.name
+  role               = "roles/iam.workloadIdentityUser"
+
+  members = [
+    "serviceAccount:${var.project_id}.svc.id.goog[cert-manager/cert-manager]",
+  ]
+}
+
+resource "google_project_iam_binding" "project" {
+  project = var.project_id
+  role    = "roles/dns.admin"
+
+  members = [
+    "serviceAccount:${google_service_account.this.email}",
+  ]
 }
