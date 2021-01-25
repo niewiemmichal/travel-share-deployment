@@ -8,6 +8,15 @@ spec:
     istio: ingressgateway
   servers:
   - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    tls:
+      httpsRedirect: true
+    hosts:
+    - www.travelshare.cvapr.xyz
+    - travelshare.cvapr.xyz
+  - port:
       number: 443
       name: https
       protocol: HTTPS
