@@ -1,15 +1,3 @@
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
-
-terraform {
-  backend "gcs" {
-    bucket = "terraform-state-6373"
-    prefix = "travel-share"
-  }
-}
-
 resource "google_compute_network" "vpc" {
   name                    = "${var.project_id}-vpc"
   auto_create_subnetworks = "false"
@@ -33,8 +21,8 @@ resource "google_container_cluster" "primary" {
   subnetwork = google_compute_subnetwork.subnet.name
 
   master_auth {
-    username = var.gke_username
-    password = var.gke_password
+    username = var.name
+    password = google_secret_manager_secret_version.gke_password.secret_data
 
     client_certificate_config {
       issue_client_certificate = false

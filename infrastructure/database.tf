@@ -1,5 +1,5 @@
 resource "google_sql_database_instance" "this" {
-  name             = "travel-share"
+  name             = var.name
   database_version = "POSTGRES_11"
 
   settings {
@@ -14,12 +14,12 @@ resource "google_sql_database_instance" "this" {
 }
 
 resource "google_sql_user" "this" {
-  name     = "travel-share"
+  name     = var.name
   instance = google_sql_database_instance.this.name
-  password = var.db_password
+  password = google_secret_manager_secret_version.database_password.secret_data
 }
 
 resource "google_sql_database" "this" {
-  name     = "travel-share"
+  name     = var.name
   instance = google_sql_database_instance.this.name
 }

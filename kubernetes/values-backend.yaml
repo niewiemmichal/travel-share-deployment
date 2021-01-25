@@ -3,10 +3,13 @@ image:
   pullPolicy: IfNotPresent
   tag: "3"
 
+replicaCount: 2
+
 django:
   debug: "False"
 
 sql:
+  username: travel-share
   engine: django.db.backends.postgresql
   host: 35.224.112.221
   port: 5432

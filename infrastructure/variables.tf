@@ -1,9 +1,10 @@
-variable "gke_username" {
-  description = "gke username"
+variable "project_id" {
+  description = "project id"
 }
 
-variable "gke_password" {
-  description = "gke password"
+variable "name" {
+  description = "the name of the project"
+  default     = "travel-share"
 }
 
 variable "gke_num_nodes" {
@@ -11,14 +12,7 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
-variable "project_id" {
-  description = "project id"
-}
-
 variable "region" {
   description = "region"
-}
-
-variable "db_password" {
-  description = "Password for the database user"
+  default     = "us-central1"
 }

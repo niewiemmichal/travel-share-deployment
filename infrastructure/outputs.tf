@@ -1,4 +1,3 @@
-
 output "region" {
   value       = var.region
   description = "GCloud Region"
@@ -21,4 +20,8 @@ output "kubernetes_cluster_host" {
 
 output "database_ip" {
   value = google_sql_database_instance.this.public_ip_address
+}
+
+output "database_password" {
+  value = google_secret_manager_secret_version.database_password.secret_data
 }
